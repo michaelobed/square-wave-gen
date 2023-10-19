@@ -48,10 +48,12 @@ ISR(USART_RX_vect)
 {
     uint16_t n = 0;
 
-    /* Read the character. If it's a newline, parse what's in the buffer. We should always echo the character. */
+    /* Read the character.
+     * If it's a newline (detected with '\r', common to Windows and Unix endings), parse what's in the buffer.
+     * We should always echo the character. */
     gUartBuf[gUartBufIdx] = UDR0;
     UDR0 = gUartBuf[gUartBufIdx];
-    if(gUartBuf[gUartBufIdx] == '\n')
+    if(gUartBuf[gUartBufIdx] == '\r')
     {
         switch(gUartBuf[0])
         {
@@ -74,6 +76,10 @@ ISR(USART_RX_vect)
         /* Reset the byte counter for the next command. */
         gUartBufIdx = 0;
     }
+
+    /* Ignore '\n' and reset the counter. */
+    else if(gUartBuf[gUartBufIdx] == '\n')
+        gUartBufIdx = 0;
 
     /* Increment the counter, as we're not done reading in bytes yet.
      * As a protective measure, don't bother with this if the buffer is full. */
