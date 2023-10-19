@@ -16,7 +16,7 @@
 #define PIN_SQ                  PB1
 
 #define IO_FREQTOPERIOD(x)      (F_CPU / (2 * (1 + x)))
-#define IO_PERIODTOFREQ(x)      (((uint32_t)(2 * x) / F_CPU) - 1)
+#define IO_PERIODTOFREQ(x)      ((F_CPU / (2 * x)) - 1)
 
 /* I/O state type. */
 typedef enum
