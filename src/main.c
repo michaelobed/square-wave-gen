@@ -18,6 +18,6 @@ int main(void)
 
     while(TRUE)
     {
-
+        IoUpdate();
     }
 }

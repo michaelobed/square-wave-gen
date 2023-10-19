@@ -11,6 +11,7 @@
     "AVR.device.frequency": 16000000,
     "AVR.programmer.type": "stk500",
     "files.associations": {
-        "api.h": "c"
+        "api.h": "c",
+        "io.h": "c"
     }
 }

@@ -9,7 +9,10 @@
 #include "io.h"
 
 /* Global variables. */
-volatile uint16_t ioSqFreq = 1000;
+volatile bool gIoFreqChanged = FALSE;
+volatile uint32_t gIoFreq = 1000;
+volatile uint16_t gIoPeriod = IO_FREQTOPERIOD(1000);
+volatile ioState_e gIoState = IOSTATE_IDLE;
 
 void IoInit(void)
 {
@@ -21,15 +24,42 @@ void IoInit(void)
     DDRB |= _BV(PIN_SQ);
 
     /* Configure the square wave output to use Timer 1A in CTC mode and output on PIN_SQ. */
-    OCR1A = IO_FREQTOPERIOD(ioSqFreq);
+    OCR1A = gIoPeriod;
     TCNT1 = 0;
-    // TCCR1A |= _BV(COM1A0);
-    // TCCR1B |= (_BV(WGM12) | _BV(CS10));
     TCCR1A = 0x40;
     TCCR1B = 0x09;
 }
 
 void IoPrintFreq(void)
 {
-    printf("Freq: %u (period: %u)\n", ioSqFreq, OCR1A);
+    printf("Freq: %lu (period: %u)\n", gIoFreq, OCR1A);
+}
+
+void IoSetFreq(uint32_t freq)
+{
+    gIoFreq = freq;
+    gIoPeriod = IO_FREQTOPERIOD(freq);
+    gIoState = IOSTATE_PERIODUPDATED;
+}
+
+void IoSetPeriod(uint16_t period)
+{
+    gIoPeriod = period;
+    gIoFreq = IO_PERIODTOFREQ(period);
+    gIoState = IOSTATE_PERIODUPDATED;
+}
+
+void IoUpdate(void)
+{
+    switch(gIoState)
+    {
+        case IOSTATE_PERIODUPDATED:
+            OCR1A = gIoPeriod;
+            IoPrintFreq();
+            gIoState = IOSTATE_IDLE;
+            break;
+
+        default:
+            break;
+    }
 }
