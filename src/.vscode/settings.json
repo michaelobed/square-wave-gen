@@ -1,0 +1,16 @@
+{
+    "AVR.source.compiler": "/usr/local/bin/avr-gcc",
+    "AVR.programmer.tool": "/usr/local/bin/avrdude",
+    "AVR.programmer.definitions": "/usr/local/Cellar/avrdude/6.3_1/etc/avrdude.conf",
+    "AVR.source.libraries": [
+        "/usr/local/Cellar/avr-gcc@9/9.3.0_3/lib/avr-gcc/9/gcc/avr/9.3.0/include",
+        "/usr/local/Cellar/avr-gcc@9/9.3.0_3/lib/avr-gcc/9/gcc/avr/9.3.0/include-fixed",
+        "/usr/local/Cellar/avr-gcc@9/9.3.0_3/avr/include"
+    ],
+    "AVR.device.type": "atmega328p",
+    "AVR.device.frequency": 16000000,
+    "AVR.programmer.type": "stk500",
+    "files.associations": {
+        "api.h": "c"
+    }
+}

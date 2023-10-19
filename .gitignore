@@ -1,0 +1,35 @@
+# Prerequisites
+*.dep/
+*.d
+
+# Object files
+*.o
+*.obj
+*.elf
+
+# Linker output
+*.map
+*.lss
+*.lst
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Executables
+*.out
+*.app
+*.eep
+*.hex
+*.bin
+bin/**
+
+# Debug files
+*.dSYM/
+*.sym
+*.su
+*.idb
+*.pdb
+
+# Other stuff
+.DS_Store
