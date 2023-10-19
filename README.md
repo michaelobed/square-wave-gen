@@ -27,7 +27,7 @@ Currently, it's only used for controlling either the frequency or the period of 
 [p][New period][Newline]
 ```
 
-omitting the '[]', of course, and assuming that `[Newline]` is either `"\n"` or `"\r\n"` (or, if you have no idea what those mean, the Enter/Return key on your keyboard).
+omitting the '[]', of course, and assuming that `[Newline]` is either `"\r"` or `"\r\n"` (or, if you have no idea what those mean, the Enter/Return key on your keyboard).
 
 ### Caveats
 Given that I'm using a 16-bit timer to generate the square wave, all conversions between period and frequency are integer approximations, so if it's inaccurate, sowwy.
