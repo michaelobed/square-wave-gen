@@ -33,7 +33,7 @@ void UartInit(void)
     /* Redirect stdout to UART. */
     stdout = &gUartOut;
 
-    printf("UART initialised\n");
+    printf("UART initialised\r\n");
 }
 
 int printChar(char c, FILE* pStream)
@@ -76,10 +76,6 @@ ISR(USART_RX_vect)
         /* Reset the byte counter for the next command. */
         gUartBufIdx = 0;
     }
-
-    /* Ignore '\n' and reset the counter. */
-    else if(gUartBuf[gUartBufIdx] == '\n')
-        gUartBufIdx = 0;
 
     /* Increment the counter, as we're not done reading in bytes yet.
      * As a protective measure, don't bother with this if the buffer is full. */

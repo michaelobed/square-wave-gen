@@ -32,7 +32,7 @@ void IoInit(void)
 
 void IoPrintFreq(void)
 {
-    printf("Freq: %lu (period: %u)\n", gIoFreq, OCR1A);
+    printf("Freq: %lu (period: %u)\r\n", gIoFreq, OCR1A);
 }
 
 void IoSetFreq(uint32_t freq)
