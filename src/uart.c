@@ -73,9 +73,7 @@ ISR(USART_RX_vect)
     if(gUartEndOfCmd)
     {
         if(gUartBuf[gUartBufIdx] == '\n')
-        {
             gUartBufIdx = 0;
-        }
         else gUartBufIdx++;
         gUartEndOfCmd = FALSE;
     }
