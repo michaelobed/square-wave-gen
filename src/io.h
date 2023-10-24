@@ -36,7 +36,8 @@
 typedef enum
 {
     IOSTATE_IDLE = 0,
-    IOSTATE_PERIODUPDATED
+    IOSTATE_PERIODUPDATED,
+    IOSTATE_CLOCKUPDATED
 } ioState_e;
 
 /* Global functions. */
@@ -45,5 +46,6 @@ void IoPrintFreq(void);
 void IoSetFreq(uint32_t freq);
 void IoSetPeriod(uint16_t period);
 void IoUpdate(void);
+void IoToggleClock(void);
 
 #endif

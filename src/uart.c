@@ -93,6 +93,11 @@ ISR(USART_RX_vect)
                 IoSetPeriod(n);
                 break;
 
+            case 's':
+                IoToggleClock();
+                break;
+
+                
             default:
                 break;
         }

@@ -29,6 +29,9 @@ volatile uint32_t gIoFreq = 1000;
 volatile uint16_t gIoPeriod = IO_FREQTOPERIOD(1000);
 volatile ioState_e gIoState = IOSTATE_IDLE;
 
+
+
+
 void IoInit(void)
 {
     /* UART. */
@@ -42,13 +45,19 @@ void IoInit(void)
     OCR1A = gIoPeriod;
     TCNT1 = 0;
     TCCR1A |= _BV(COM1A0);
-    TCCR1B |= (_BV(WGM12) | _BV(CS10));
+    TCCR1B |= (_BV(WGM12));        
 }
 
 void IoPrintFreq(void)
 {
     printf("Freq: %lu (period: %u)\r\n", gIoFreq, OCR1A);
 }
+
+void IoToggleClock(void)
+{
+    gIoState = IOSTATE_CLOCKUPDATED;
+}
+
 
 void IoSetFreq(uint32_t freq)
 {
@@ -73,7 +82,16 @@ void IoUpdate(void)
             IoPrintFreq();
             gIoState = IOSTATE_IDLE;
             break;
-
+        
+        case IOSTATE_CLOCKUPDATED:
+            TCCR1B ^= _BV(CS10);
+            if ( TCCR1B & _BV(CS10) )
+            {
+                printf("Clock Toggled on\r\n");
+            }
+            else  printf("Clock Toggled off\r\n");
+            gIoState = IOSTATE_IDLE;
+            break;
         default:
             break;
     }
