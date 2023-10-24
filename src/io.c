@@ -41,8 +41,8 @@ void IoInit(void)
     /* Configure the square wave output to use Timer 1A in CTC mode and output on PIN_SQ. */
     OCR1A = gIoPeriod;
     TCNT1 = 0;
-    TCCR1A = 0x40;
-    TCCR1B = 0x09;
+    TCCR1A |= _BV(COM1A0);
+    TCCR1B |= (_BV(WGM12) | _BV(CS10));
 }
 
 void IoPrintFreq(void)
