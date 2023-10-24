@@ -30,6 +30,7 @@ int printChar(char c, FILE* pStream);
 char gUartBuf[UART_BUFSIZE];
 uint8_t gUartBufIdx = 0;
 FILE gUartOut = FDEV_SETUP_STREAM(printChar, NULL, _FDEV_SETUP_RW);
+bool gUartEndOfCmd = FALSE;
 
 void UartInit(void)
 {
@@ -67,7 +68,18 @@ ISR(USART_RX_vect)
      * We should always echo the character. */
     gUartBuf[gUartBufIdx] = UDR0;
     UDR0 = gUartBuf[gUartBufIdx];
-    if(gUartBuf[gUartBufIdx] == '\r')
+
+    /* Some terminals send "\r\n" as a newline, so detect the extraneous '\n' and throw it away. */
+    if(gUartEndOfCmd)
+    {
+        if(gUartBuf[gUartBufIdx] == '\n')
+        {
+            gUartBufIdx = 0;
+        }
+        else gUartBufIdx++;
+        gUartEndOfCmd = FALSE;
+    }
+    else if(gUartBuf[gUartBufIdx] == '\r')
     {
         switch(gUartBuf[0])
         {
@@ -89,6 +101,7 @@ ISR(USART_RX_vect)
 
         /* Reset the byte counter for the next command. */
         gUartBufIdx = 0;
+        gUartEndOfCmd = TRUE;
     }
 
     /* Increment the counter, as we're not done reading in bytes yet.
