@@ -93,7 +93,8 @@ ISR(USART_RX_vect)
                 IoSetPeriod(n);
                 break;
 
-            case 's':
+            /* Toggle the square wave on/off. */
+            case 't':
                 IoToggleClock();
                 break;
 

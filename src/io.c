@@ -53,11 +53,10 @@ void IoPrintFreq(void)
     printf("Freq: %lu (period: %u)\r\n", gIoFreq, OCR1A);
 }
 
-void IoToggleClock(void)
+void IoPrintOutputStatus(void)
 {
-    gIoState = IOSTATE_CLOCKUPDATED;
+    printf("Output: %s\r\n", (TCCR1B & _BV(CS10)) ? "on" : "off");
 }
-
 
 void IoSetFreq(uint32_t freq)
 {
@@ -73,6 +72,11 @@ void IoSetPeriod(uint16_t period)
     gIoState = IOSTATE_PERIODUPDATED;
 }
 
+void IoToggleClock(void)
+{
+    gIoState = IOSTATE_CLOCKUPDATED;
+}
+
 void IoUpdate(void)
 {
     switch(gIoState)
@@ -85,11 +89,7 @@ void IoUpdate(void)
         
         case IOSTATE_CLOCKUPDATED:
             TCCR1B ^= _BV(CS10);
-            if ( TCCR1B & _BV(CS10) )
-            {
-                printf("Clock Toggled on\r\n");
-            }
-            else  printf("Clock Toggled off\r\n");
+            IoPrintOutputStatus();
             gIoState = IOSTATE_IDLE;
             break;
         default:

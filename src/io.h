@@ -43,9 +43,10 @@ typedef enum
 /* Global functions. */
 void IoInit(void);
 void IoPrintFreq(void);
+void IoPrintOutputStatus(void);
 void IoSetFreq(uint32_t freq);
 void IoSetPeriod(uint16_t period);
-void IoUpdate(void);
 void IoToggleClock(void);
+void IoUpdate(void);
 
 #endif

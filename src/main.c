@@ -29,6 +29,7 @@ int main(void)
     IoInit();
     UartInit();
     IoPrintFreq();
+    IoPrintOutputStatus();
 
     while(TRUE)
     {
