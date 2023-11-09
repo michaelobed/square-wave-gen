@@ -19,6 +19,20 @@
                 "/System/Library/Frameworks",
                 "/Library/Frameworks"
             ]
+        },
+        {
+            "name": "AVR (Windows)",
+            "intelliSenseMode": "${default}",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "compilerPath": "C:\\Program Files (x86)\\avr8-gnu-toolchain-win32_x86-master\\bin\\avr-gcc.exe",
+            "includePath": [
+                "C:\\Program Files (x86)\\avr8-gnu-toolchain-win32_x86-master\\avr\\include"
+            ],
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                "-DF_CPU=16000000UL"
+            ]
         }
     ],
     "version": 4
