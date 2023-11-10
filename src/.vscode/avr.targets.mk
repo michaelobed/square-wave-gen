@@ -1,5 +1,6 @@
 -include .vscode/avr.properties.mk
 
+# This is from the default AVR Helper template with a few modifications to put the output somewhere we like. :)
 ifeq ($(AVR.source.compiler),$(notdir $(AVR.source.compiler)))
 A.compiler.dir :=
 else
@@ -13,9 +14,17 @@ A.app.elf := $(A.output.dir)/square-wave-gen.elf
 A.app.list := $(A.output.dir)/app.lst
 
 # Put your board type here. "SWG_UNO" and "SWG_MEGA" are currently supported.
-A.app.board := SWG_UNO
+A.app.board := SWG_MEGA
 
-E.compiler := $(AVR.source.compiler) -DF_CPU=$(AVR.device.frequency) -mmcu=$(AVR.device.type) -D$(A.app.board) -pipe $(A.libraries)
+# Now let's select the chip automatically depending on what was chosen.
+ifeq ($(A.app.board),SWG_UNO)
+A.app.chip := atmega328p
+else ifeq ($(A.app.board),SWG_MEGA)
+A.app.chip := atmega2560
+endif
+
+# The rest of this is virtually untouched from the template, with the exception of A.app.chip and A.app.board.
+E.compiler := $(AVR.source.compiler) -DF_CPU=$(AVR.device.frequency) -mmcu=$(A.app.chip) -D$(A.app.board) -pipe $(A.libraries)
 E.get.dep := $(E.compiler) -MM
 E.compile := $(E.compiler) -std=gnu99 -g -O2 -Wall -Wstrict-prototypes -c -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -ffunction-sections -fdata-sections
 E.link := $(E.compiler) -Wall -g -fuse-linker-plugin -Wl,--gc-sections -lm

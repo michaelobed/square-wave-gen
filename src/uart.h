@@ -22,7 +22,13 @@
 #define uart_h
 
 /* Macros. */
-#define UART_BUFSIZE            64
+#define UART_BUFSIZE                64
+
+#if defined(SWG_UNO)
+    #define SWG_UARTvect            USART_RX_vect
+#elif defined(SWG_MEGA)
+    #define SWG_UARTvect            USART0_RX_vect
+#endif
 
 /* Global functions. */
 void UartInit(void);

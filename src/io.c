@@ -29,17 +29,26 @@ volatile uint32_t gIoFreq = 1000;
 volatile uint16_t gIoPeriod = IO_FREQTOPERIOD(1000);
 volatile ioState_e gIoState = IOSTATE_IDLE;
 
-
-
-
 void IoInit(void)
 {
+    /* All I/O should be configured by board type (see the avr.targets.mk Makefile). */
+#if defined(SWG_UNO)
     /* UART. */
     DDRD &= ~_BV(PIN_UARTRX);
     DDRD |= _BV(PIN_UARTTX);
+    
+    /* Square wave output. */
+    DDRB |= _BV(PIN_SQ);
+
+#elif defined(SWG_MEGA)
+    /* UART. */
+    DDRE &= ~_BV(PIN_UARTRX);
+    DDRE |= _BV(PIN_UARTTX);
 
     /* Square wave output. */
     DDRB |= _BV(PIN_SQ);
+#endif
+
 
     /* Configure the square wave output to use Timer 1A in CTC mode and output on PIN_SQ. */
     OCR1A = gIoPeriod;

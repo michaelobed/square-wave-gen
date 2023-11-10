@@ -30,7 +30,9 @@
     #define PIN_UARTTX              PD1
     #define PIN_SQ                  PB1
 #elif defined(SWG_MEGA)
-
+    #define PIN_UARTRX              PE0
+    #define PIN_UARTTX              PE1
+    #define PIN_SQ                  PB5
 #endif
 
 #define IO_FREQTOPERIOD(x)      (F_CPU / (2 * (1 + x)))

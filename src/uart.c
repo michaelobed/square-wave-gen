@@ -59,7 +59,7 @@ int printChar(char c, FILE* pStream)
     return 0;
 }
 
-ISR(USART_RX_vect)
+ISR(SWG_UARTvect)
 {
     uint16_t n = 0;
 
