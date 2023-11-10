@@ -12,7 +12,10 @@ A.app.hex := $(A.output.dir)/square-wave-gen.hex
 A.app.elf := $(A.output.dir)/square-wave-gen.elf
 A.app.list := $(A.output.dir)/app.lst
 
-E.compiler := $(AVR.source.compiler) -DF_CPU=$(AVR.device.frequency) -mmcu=$(AVR.device.type) -pipe $(A.libraries)
+# Put your board type here. "SWG_UNO" and "SWG_MEGA" are currently supported.
+A.app.board := SWG_UNO
+
+E.compiler := $(AVR.source.compiler) -DF_CPU=$(AVR.device.frequency) -mmcu=$(AVR.device.type) -D$(A.app.board) -pipe $(A.libraries)
 E.get.dep := $(E.compiler) -MM
 E.compile := $(E.compiler) -std=gnu99 -g -O2 -Wall -Wstrict-prototypes -c -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -ffunction-sections -fdata-sections
 E.link := $(E.compiler) -Wall -g -fuse-linker-plugin -Wl,--gc-sections -lm

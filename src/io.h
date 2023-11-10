@@ -25,9 +25,13 @@
 #include "api.h"
 
 /* Macros. */
-#define PIN_UARTRX              PD0
-#define PIN_UARTTX              PD1
-#define PIN_SQ                  PB1
+#if defined(SWG_UNO)
+    #define PIN_UARTRX              PD0
+    #define PIN_UARTTX              PD1
+    #define PIN_SQ                  PB1
+#elif defined(SWG_MEGA)
+
+#endif
 
 #define IO_FREQTOPERIOD(x)      (F_CPU / (2 * (1 + x)))
 #define IO_PERIODTOFREQ(x)      ((F_CPU / (2 * x)) - 1)
