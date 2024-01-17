@@ -29,8 +29,9 @@ volatile uint32_t gIoFreq = 1000;
 volatile uint16_t gIoPeriod = IO_FREQTOPERIOD(1000);
 volatile ioState_e gIoState = IOSTATE_IDLE;
 
-
-
+/* Local functions. */
+void loadSettings(void);
+void saveSettings(void);
 
 void IoInit(void)
 {
@@ -45,7 +46,10 @@ void IoInit(void)
     OCR1A = gIoPeriod;
     TCNT1 = 0;
     TCCR1A |= _BV(COM1A0);
-    TCCR1B |= (_BV(WGM12));        
+    TCCR1B |= (_BV(WGM12));
+
+    /* Finally, load our last period settings. */
+    loadSettings();
 }
 
 void IoPrintFreq(void)
@@ -83,16 +87,39 @@ void IoUpdate(void)
     {
         case IOSTATE_PERIODUPDATED:
             OCR1A = gIoPeriod;
+            saveSettings();
             IoPrintFreq();
             gIoState = IOSTATE_IDLE;
             break;
         
         case IOSTATE_CLOCKUPDATED:
             TCCR1B ^= _BV(CS10);
+            saveSettings();
             IoPrintOutputStatus();
             gIoState = IOSTATE_IDLE;
             break;
+
         default:
             break;
     }
+}
+
+void loadSettings(void)
+{
+    uint16_t period = 0xffff;
+
+    /* Read the EEPROM-is-in-use byte. If zero, skip loading. */
+    if(eeprom_read_byte((const uint8_t*)0x0000) == IO_EEPROMINUSEBYTE)
+    {
+        /* Read the 2-byte period from EEPROM. */
+        period = eeprom_read_word((const uint16_t*)0x0001);
+        IoSetPeriod(period);
+    }
+}
+
+void saveSettings(void)
+{
+    /* Write 2-byte period to 0x0000 of EEPROM, then write a byte saying there is now data in the EEPROM. */
+    eeprom_write_word((const uint16_t*)0x0001, gIoPeriod);
+    eeprom_write_byte((const uint8_t*)0x0000, IO_EEPROMINUSEBYTE);
 }

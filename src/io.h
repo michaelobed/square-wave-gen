@@ -32,6 +32,8 @@
 #define IO_FREQTOPERIOD(x)      (F_CPU / (2 * (1 + x)))
 #define IO_PERIODTOFREQ(x)      ((F_CPU / (2 * x)) - 1)
 
+#define IO_EEPROMINUSEBYTE      0xaf
+
 /* I/O state type. */
 typedef enum
 {

@@ -28,7 +28,6 @@ int main(void)
     /* Initialise with default freq of 1kHz. */
     IoInit();
     UartInit();
-    IoPrintFreq();
     IoPrintOutputStatus();
 
     while(TRUE)
