@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "AVR",
+            "name": "AVR (x86_64)",
             "intelliSenseMode": "${default}",
             "cStandard": "c11",
             "cppStandard": "c++14",
@@ -21,6 +21,26 @@
             ]
         },
         {
+            "name": "AVR (arm64)",
+            "intelliSenseMode": "${default}",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "compilerPath": "/opt/homebrew/bin/avr-gcc",
+            "includePath": [
+                "/opt/homebrew/Cellar/avr-gcc@9/9.4.0/lib/avr-gcc/9/gcc/avr/9.4.0/include/**",
+                "/opt/homebrew/Cellar/avr-gcc@9/9.4.0/lib/avr-gcc/9/gcc/avr/9.4.0/include-fixed/**",
+                "/opt/homebrew/Cellar/avr-gcc@9/9.4.0/avr/include/**"
+            ],
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                "-DF_CPU=16000000UL"
+            ],
+            "macFrameworkPath": [
+                "/System/Library/Frameworks",
+                "/Library/Frameworks"
+            ]
+        },
+        {
             "name": "AVR (Windows)",
             "intelliSenseMode": "${default}",
             "cStandard": "c11",
@@ -28,6 +48,22 @@
             "compilerPath": "C:\\Program Files (x86)\\avr8-gnu-toolchain-win32_x86-master\\bin\\avr-gcc.exe",
             "includePath": [
                 "C:\\Program Files (x86)\\avr8-gnu-toolchain-win32_x86-master\\avr\\include"
+            ],
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                "-DF_CPU=16000000UL"
+            ]
+        },
+        {
+            "name": "AVR",
+            "intelliSenseMode": "${default}",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "compilerPath": "/opt/homebrew/bin/avr-gcc",
+            "includePath": [
+                "/opt/homebrew/Cellar/avr-gcc@9/9.3.0_3/lib/avr-gcc/9/gcc/avr/9.3.0/include/**",
+                "/opt/homebrew/Cellar/avr-gcc@9/9.3.0_3/lib/avr-gcc/9/gcc/avr/9.3.0/include-fixed/**",
+                "/opt/homebrew/Cellar/avr-gcc@9/9.3.0_3/avr/include/**"
             ],
             "compilerArgs": [
                 "-mmcu=atmega328p",
