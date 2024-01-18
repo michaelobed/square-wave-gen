@@ -109,7 +109,7 @@ void loadSettings(void)
     uint16_t period = 0xffff;
 
     /* Read the EEPROM-is-in-use byte. If zero, skip loading. */
-    if(eeprom_read_byte((const uint8_t*)0x0000) == IO_EEPROMINUSEBYTE)
+    if(eeprom_read_byte((void*)0x0000) == IO_EEPROMINUSEBYTE)
     {
         /* Read the 2-byte period from EEPROM. */
         period = eeprom_read_word((const uint16_t*)0x0001);
@@ -120,6 +120,6 @@ void loadSettings(void)
 void saveSettings(void)
 {
     /* Write 2-byte period to 0x0000 of EEPROM, then write a byte saying there is now data in the EEPROM. */
-    eeprom_write_word((const uint16_t*)0x0001, gIoPeriod);
-    eeprom_write_byte((const uint8_t*)0x0000, IO_EEPROMINUSEBYTE);
+    eeprom_write_word((void*)0x0001, gIoPeriod);
+    eeprom_write_byte((void*)0x0000, IO_EEPROMINUSEBYTE);
 }
