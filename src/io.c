@@ -112,7 +112,7 @@ void loadSettings(void)
     if(eeprom_read_byte((void*)0x0000) == IO_EEPROMINUSEBYTE)
     {
         /* Read the 2-byte period from EEPROM. */
-        period = eeprom_read_word((const uint16_t*)0x0001);
+        period = eeprom_read_word((void*)0x0001);
         IoSetPeriod(period);
     }
 }
